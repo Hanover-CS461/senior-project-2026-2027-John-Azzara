@@ -174,10 +174,24 @@ Games will be simulated using a possession-based model influenced by tactics, pl
 
 ## References
 
-[1] Sports Interactive, Football Manager, 2024.  
-[2] 2K Sports, College Hoops 2K8, 2007.  
-[3] CFB 27 Dev Team, CFB 27, 2024.  
-[4] Godot Engine Documentation, 2024.  
-[5] NCAA Recruiting Rules and Calendar, 2024.  
-[6] Ken Pomeroy, College Basketball Analytics, 2024.  
-[7] Render.com Hosting Documentation, 2024.
+[1] Football Manager — Sports Interactive  
+https://www.footballmanager.com/
+
+[2] College Hoops 2K8 — Wikipedia  
+https://en.wikipedia.org/wiki/College_Hoops_2K8
+
+[3] CFB 27 — Official Website  
+https://www.cfb27.com/
+
+[4] Godot Engine Documentation  
+https://docs.godotengine.org
+
+[5] NCAA Recruiting Rules and Calendar  
+https://www.ncaa.org/sports/2021/7/19/recruiting-calendars.aspx
+
+[6] KenPom — College Basketball Advanced Stats  
+https://kenpom.com/
+
+[7] Render — Web Hosting Documentation  
+https://render.com/docs
+
