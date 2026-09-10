@@ -149,25 +149,17 @@ Games will be simulated using a possession-based model influenced by tactics, pl
 - Weeks 9–12: Season progression and polish
 - Weeks 13–15: Final testing, documentation, and presentation
 
-## Risks and Mitigation
-
 ### Risks
 - Scope may become too large
-- Simulation complexity may require tuning
+- Simulation will be very complex, I will try to make it as simplistic as possible while still staying realistic
 - UI may take longer than expected
 - Balancing realism versus accessibility may be challenging
-
-### Mitigation
-- Build a minimum viable product first
-- Use a modular architecture
-- Perform iterative testing
-- Prioritize core systems before advanced features
 
 ## New Concepts to Learn
 - Godot UI system and web export
 - REST API development
-- Database schema design
-- Sports simulation modeling
+- Managing Large Scale databases (undecided if the players/coaches/staff with by generated or based off of real life)
+- Sports simulation modeling (finding a good way to simulate what teams win based off of their rosters, coaches, morale, ect.)
 - NCAA recruiting structures
 - Web deployment pipelines
 - GitHub Pages workflow
