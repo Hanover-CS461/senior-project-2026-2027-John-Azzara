@@ -1,3 +1,5 @@
+---
+---
 # Introduction
 This tutorial explains the core simulation logic behind a college basketball management game.  
 The goal is to teach how a game engine can realistically decide outcomes such as:

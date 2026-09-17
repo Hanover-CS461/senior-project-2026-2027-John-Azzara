@@ -1,0 +1,54 @@
+<h1 id="introduction">Introduction</h1>
+<p>This tutorial explains the core simulation logic behind a college basketball management game.<br />
+The goal is to teach how a game engine can realistically decide outcomes such as:</p>
+
+<ul>
+  <li>Which team wins a game</li>
+  <li>How individual players perform</li>
+  <li>Where recruits commit</li>
+  <li>How morale and development change over time</li>
+  <li>How coaching, tactics, and randomness influence results</li>
+</ul>
+
+<p>By the end of this tutorial, you will understand the essential components of a sports simulation system and how each part interacts to create a believable, dynamic basketball world.</p>
+
+<h2 id="game-day-simulation-logic">Game Day Simulation Logic</h2>
+
+<h3 id="overview">Overview</h3>
+<p>Game day simulation is responsible for determining the outcome of each matchup.<br />
+A realistic simulation must consider:</p>
+
+<ul>
+  <li>Possession flow</li>
+  <li>Player fatigue</li>
+  <li>Team tactics</li>
+  <li>Randomness and probability</li>
+  <li>Box score generation</li>
+  <li>Individual player performance</li>
+</ul>
+
+<p>These systems work together to produce believable results that mimic real college basketball.</p>
+
+<h2 id="possession-model">Possession Model</h2>
+<p>A possession model breaks the game into discrete units of play.<br />
+Each possession evaluates:</p>
+
+<ul>
+  <li>Offensive rating</li>
+  <li>Defensive rating</li>
+  <li>Shot selection</li>
+  <li>Turnover probability</li>
+  <li>Rebound chances</li>
+  <li>Pace (fast vs slow)</li>
+</ul>
+
+<p>A simplified example of a possession loop:</p>
+
+<p>```python
+for possession in range(total_possessions):
+    shot_quality = offense.rating - defense.rating
+    success_chance = shot_quality * tactic_modifier
+    if randf() &lt; success_chance:
+        score += points_from_shot()
+    else:
+        handle_missed_shot()</p>
