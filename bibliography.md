@@ -48,5 +48,6 @@ CFB 27 is a modern college football simulation game that blends team management,
 Analysis:  
 CFB 27’s recruiting mechanics, transfer portal integration, and dynasty progression systems are highly relevant to your basketball simulation. The way it handles prospect interest, scouting, star ratings, and program prestige provides a strong model for how to structure your own recruiting logic. Its emphasis on staff roles, training boosts, and player development cycles also aligns with your goals. Studying how CFB 27 balances realism with accessibility can help you design intuitive systems for scouting, roster management, and long‑term program building in your game.
 
-- [Home](/senior-project-2026-2027-John-Azzara/)
-- [Proposal](proposal/proposal.md)
+- [Home]({{ '/' | relative_url }})
+- [Proposal]({{ '/proposal/proposal.md' | relative_url }})
+
