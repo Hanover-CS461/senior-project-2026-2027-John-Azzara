@@ -1,6 +1,8 @@
 ---
+layout: default
 title: Home
 ---
+
 
 # Senior Project 2026–2027  
 ### John Azzara
