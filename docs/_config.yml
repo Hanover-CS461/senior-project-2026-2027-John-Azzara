@@ -1,0 +1,22 @@
+title: "Senior Project 2026–2027 — John Azzara"
+description: "Project site for CS461 Senior Seminar"
+
+theme: minima
+
+plugins:
+  - jekyll-relative-links
+
+relative_links:
+  enabled: true
+  collections: true
+
+markdown: kramdown
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+
+# GitHub Pages base URL
+baseurl: "/senior-project-2026-2027-John-Azzara"
+url: "https://hanover-cs461.github.io"
