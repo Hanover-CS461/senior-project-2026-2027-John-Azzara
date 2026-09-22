@@ -189,3 +189,7 @@ https://kenpom.com/
 [7] Render — Web Hosting Documentation  
 https://render.com/docs
 
+- [Home]({{ '/' | relative_url }})
+- [Bibliography]({{ '/bibliography.md' | relative_url }})
+
+
