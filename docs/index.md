@@ -10,6 +10,6 @@ title: Home
 Welcome to my senior project site. Use the links below to navigate the project materials.
 
 - [Proposal]({{ '/docs/proposal/proposal.md' | relative_url }})
-- [Bibliography]({{ '/bibliography.md' | relative_url }})
+- [Bibliography]({{ '/docs/bibliography.md' | relative_url }})
 
 
