@@ -1,4 +1,4 @@
-name: Pages deploy
+name: Deploy GitHub Pages
 
 on:
   push:
@@ -11,10 +11,11 @@ permissions:
   id-token: write
 
 jobs:
-  build-docs:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
@@ -34,8 +35,8 @@ jobs:
         with:
           path: _site
 
-  deploy-pages:
-    needs: build-docs
+  deploy:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
