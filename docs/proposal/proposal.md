@@ -193,4 +193,5 @@ https://kenpom.com/
 https://render.com/docs
 
 - [Home]({{ '/' | relative_url }})
-- [Bibliography]({{ '/bibliography.md' | relative_url }})
+- [Bibliography]({{ '/docs/bibliography.md' | relative_url }})
+
