@@ -1,3 +1,7 @@
+---
+layout: default
+title: Bibliography
+---
 # College Coach Basketball Sim
 The goal of this project is to create a basketball manager/coach simulator. The user will select a college team and their task is to use recruiting, the transfer portal, player development, scouting, and staff to build the best program they can.
 The central idea is doing every aspect of running a college basketball program but not actually controlling the players in game. The user will be expected to set their team tactics up and find the best linup and setup for each gameday to defeat their opponents.
