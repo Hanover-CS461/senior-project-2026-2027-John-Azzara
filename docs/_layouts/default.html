@@ -2,13 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>{{ page.title }} — Senior Project</title>
-  <link rel="stylesheet" href="{{ '/senior-project-2026-2027-John-Azzara/basic.css' | relative_url }}">
+  <title>{{ page.title }} | {{ site.title }}</title>
+  <link rel="stylesheet" href="{{ '/basic.css' | relative_url }}">
 </head>
-
 <body>
-  <div class="container">
+
+  <header>
+    <h1>{{ site.title }}</h1>
+    <p>{{ site.description }}</p>
+  </header>
+
+  <main>
     {{ content }}
-  </div>
+  </main>
+
+  <footer>
+    <p>© {{ site.time | date: "%Y" }} {{ site.title }}</p>
+  </footer>
+
 </body>
 </html>
