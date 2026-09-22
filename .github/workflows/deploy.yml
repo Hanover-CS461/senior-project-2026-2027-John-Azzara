@@ -28,7 +28,8 @@ jobs:
           bundle install
 
       - name: Build site
-        run: bundle exec jekyll build --source docs --destination _site
+        run: bundle exec jekyll build --destination _site
+
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
