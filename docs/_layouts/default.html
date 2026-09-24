@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>{{ page.title }} | {{ site.title }}</title>
-  <link rel="stylesheet" href="{{ '/basic.css' | relative_url }}">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} | {{ site.title }}</title>
+    <link rel="stylesheet" href="{{ '/basic.css' | relative_url }}">
+  </head>
+  <body>
+    <header>
+      <h1>{{ site.title }}</h1>
+      <nav>
+        <a href="{{ '/' | relative_url }}">Home</a> |
+        <a href="{{ '/proposal.html' | relative_url }}">Proposal</a> |
+        <a href="{{ '/bibliography.html' | relative_url }}">Bibliography</a>
+      </nav>
+    </header>
 
-  <header>
-    <h1>{{ site.title }}</h1>
-    <p>{{ site.description }}</p>
-  </header>
+    <main>
+      {{ content }}
+    </main>
 
-  <main>
-    {{ content }}
-  </main>
-
-  <footer>
-    <p>© {{ site.time | date: "%Y" }} {{ site.title }}</p>
-  </footer>
-
-</body>
+    <footer>
+      <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}</p>
+    </footer>
+  </body>
 </html>
