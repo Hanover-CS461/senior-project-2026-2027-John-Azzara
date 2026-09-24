@@ -1,10 +1,11 @@
 ---
 marp: true
-layout: presentation
+layout: basketball
 theme: default
 class: lead
 paginate: true
 ---
+
 
 
 # **College Basketball Manager**
