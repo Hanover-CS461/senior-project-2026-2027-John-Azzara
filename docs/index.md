@@ -14,4 +14,4 @@ Use the navigation links above to explore:
 ---
 
 ## About This Project
-Write a short paragraph here describing your project’s purpose, goals, and what you’re researching or building. Keep it concise — this is your homepage intro.
+Write a short paragraph here describing your project’s purpose, goals, and what you’re researching or building. Keep it concise and clear.
