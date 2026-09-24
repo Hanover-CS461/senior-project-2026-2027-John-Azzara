@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{ page.title }}</title>
+  <link rel="stylesheet" href="https://unpkg.com/marp-core/dist/marp.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    section {
+      padding: 60px;
+      font-size: 1.4rem;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  {{ content }}
+</body>
+</html>
