@@ -1,8 +1,6 @@
 ---
-marp: true
-layout: basketball
-theme: default
-class: lead
+title: College Basketball Manager
+theme: cayman
 paginate: true
 ---
 
