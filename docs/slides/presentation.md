@@ -12,7 +12,7 @@ title: College Basketball Manager
 ---
 
 # **Introduction**
-## What I Built
+## What I'm Building
 
 - A **College Basketball Manager** simulation game inspired by *Football Manager*  
 - Lets players run a full college basketball program  
@@ -72,7 +72,7 @@ title: College Basketball Manager
 - Great for React projects
 
 ### **GitHub Pages (Deployment)**
-- Free hosting  
+- Free hosting   
 - Automatic deployment
 
 ---
