@@ -1,0 +1,36 @@
+/* Basketball court background */
+section {
+  background: url('https://upload.wikimedia.org/wikipedia/commons/5/5f/Basketball_court_illustration.png');
+  background-size: cover;
+  background-position: center;
+  padding: 60px;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+/* Title slides */
+h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  text-align: center;
+  color: #ffcc00; /* NCAA gold */
+}
+
+/* Section headers */
+h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: center;
+  color: #ffffff;
+}
+
+/* Bullet points */
+li {
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+}
+
+/* Slide pagination */
+footer {
+  color: #ffffff;
+}
