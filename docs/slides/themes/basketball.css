@@ -1,0 +1,97 @@
+/* Overall slide background */
+section {
+  background: radial-gradient(circle at top left, #ff9800 0%, #f57c00 35%, #212121 100%);
+  color: #ffffff;
+  padding: 60px;
+  font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Slide content area */
+section > * {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Main title */
+h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #ffeb3b;
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.7);
+  margin-bottom: 1.5rem;
+}
+
+/* Section titles */
+h2 {
+  font-size: 1.9rem;
+  font-weight: 700;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  margin-bottom: 1rem;
+}
+
+/* Subheadings */
+h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #ffe082;
+  margin-bottom: 0.75rem;
+}
+
+/* Bullet lists */
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+li {
+  position: relative;
+  font-size: 1.2rem;
+  margin-bottom: 0.6rem;
+  padding-left: 1.6rem;
+}
+
+/* Basketball bullet icon */
+li::before {
+  content: "🏀";
+  position: absolute;
+  left: 0;
+  top: 0.1rem;
+  font-size: 1.1rem;
+}
+
+/* Emphasis text */
+strong {
+  color: #ffeb3b;
+}
+
+em {
+  color: #ffcc80;
+}
+
+/* Footer / small text */
+small {
+  font-size: 0.9rem;
+  color: #eeeeee;
+}
+
+/* Code / inline data */
+code {
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+
+/* Navigation / pagination tweaks (if supported by theme engine) */
+footer {
+  font-size: 0.85rem;
+  color: #eeeeee;
+  text-align: right;
+  opacity: 0.8;
+}

@@ -1,10 +1,9 @@
 ---
-title: College Basketball Manager
-theme: cayman
+marp: true
+theme: gaia
 paginate: true
+title: College Basketball Manager
 ---
-
-
 
 # **College Basketball Manager**
 ### John Azzara — CS461 Senior Seminar  
@@ -13,22 +12,22 @@ paginate: true
 ---
 
 # **Introduction**
-## What I Built & Why It Matters
+## What I Built
 
 - A **College Basketball Manager** simulation game inspired by *Football Manager*  
 - Lets players run a full college basketball program  
-- Focuses on recruiting, player development, staff management, and season progression  
+- Focuses on recruiting, development, staff management, and season progression  
 - Built to explore sports analytics, simulation design, and web app architecture
 
 ---
 
 # **Motivation**
-## Why Build a College Basketball Manager?
+## Why Build This?
 
-- No major game exists that captures the **unique ecosystem** of college basketball  
-- Recruiting battles, NIL, transfer portal, and academic eligibility create rich strategy  
-- College hoops has passionate fans but limited management‑sim representation  
-- I wanted to build something that blends **data**, **strategy**, and **simulation**
+- No modern game captures the **unique ecosystem** of college basketball  
+- Recruiting battles, NIL, transfer portal, and academics create deep strategy  
+- College hoops has passionate fans but limited management‑sim options  
+- I wanted to blend **data**, **strategy**, and **simulation** in a web app
 
 ---
 
@@ -52,80 +51,66 @@ paginate: true
 - Recruit prospects based on interest, ratings, and competition  
 - Manage scholarships and roster limits  
 - Navigate NIL incentives and transfer portal  
-- Simulate games and seasons  
+- Simulate games and full seasons  
 - Build a long‑term program identity
 
 ---
 
 # **Technologies Used**
-## The Tools Behind the Project
+## Tools Behind the Project
 
-- **Frontend:** React  
-- **Backend:** Express / Node  
-- **Build Tools:** Vite  
-- **Deployment:** GitHub Pages  
-- **Data:** JSON‑based player and team models  
-- **Version Control:** GitHub
+### **React (Frontend)**
+- Component‑based UI for roster, player cards, and tables  
+- Fast rendering for dynamic data
 
+### **Express (Backend)**
+- API endpoints for teams, players, and simulations  
+- Easy to expand into more complex logic
 ---
-
-# **Why These Technologies?**
-## Clear Justification (A‑Level Requirement)
-
-### React  
-- Component‑based UI fits roster, player cards, and tables  
-- Fast rendering for dynamic data  
-- Alternatives considered: Vue, Svelte
-
-### Express  
-- Simple API endpoints for teams, players, and simulations  
-- Easy to expand into more complex logic  
-- Alternatives considered: Django, Flask
-
-### Vite  
+### **Vite (Build Tool)**
 - Extremely fast dev environment  
-- Great for React projects  
-- Alternatives considered: Webpack
+- Great for React projects
 
-### GitHub Pages  
+### **GitHub Pages (Deployment)**
 - Free hosting  
-- Automatic deployment  
-- Alternatives considered: Netlify, Vercel
+- Automatic deployment
 
 ---
 
 # **Architecture Overview**
-## How the System Fits Together
+## How Everything Fits Together
 
-- **React Frontend**  
-  - Roster view  
-  - Recruiting dashboard  
-  - Player development screens  
-  - Season simulation UI  
+### **React Frontend**
+- Roster view  
+- Recruiting dashboard  
+- Player development screens  
+- Season simulation UI  
+---
+### **Express Backend**
+- Player generation  
+- Recruiting logic  
+- Game simulation engine  
+- Team progression  
 
-- **Express Backend**  
-  - Player generation  
-  - Recruiting logic  
-  - Game simulation engine  
-  - Team progression  
-
-- **Data Flow**  
-  - Frontend requests → Backend simulation → Updated state returned  
-  - Stored in JSON models for simplicity
+### **Data Flow**
+- Frontend requests → Backend simulation → Updated state returned  
+- Stored in JSON models for simplicity
 
 ---
 
 # **Related Work**
-## What Exists & How This Compares
+## What Exists Today
 
-- **Football Manager**  
-  - Deep simulation, but focused on professional soccer  
-- **College Hoops 2K8 (legacy)**  
-  - Limited management depth, outdated  
-- **Mobile GM games**  
-  - Shallow recruiting and development systems  
+### **Football Manager**
+- Deep simulation, but focused on professional soccer  
 
-**My project adds:**  
+### **College Hoops 2K8**
+- Limited management depth, outdated  
+---
+### **Mobile GM Games**
+- Shallow recruiting and development systems  
+
+### **My Project Adds**
 - Modern recruiting mechanics  
 - Transfer portal logic  
 - NIL incentives  
@@ -136,8 +121,35 @@ paginate: true
 ---
 
 # **Challenges & Solutions**
-## What I Overcame
+## What I Plan to Overcame
 
-- Designing realistic recruiting logic  
-- Balancing player development curves  
-- Creating meaningful
+### **Recruiting Logic**
+- Balancing interest, competition, and ratings  
+- Creating realistic commitment behavior  
+
+### **Player Development**
+- Designing believable growth curves  
+- Ensuring long‑term progression feels rewarding  
+---
+### **Game Simulation**
+- Building a system that feels fair and consistent  
+- Making results meaningful across seasons  
+
+### **Web Architecture**
+- Connecting React + Express smoothly  
+- Managing state between frontend and backend
+
+---
+
+# **Conclusion**
+## What I Expect to Learn
+
+- How to design a full simulation system  
+- How to build and connect a modern web stack  
+- How to model complex sports systems with data  
+- How to iterate and refine a long‑term project
+
+---
+
+# **Thank You**
+### Questions?
