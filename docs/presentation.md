@@ -1,9 +1,11 @@
 ---
 marp: true
+layout: presentation
 theme: default
 class: lead
 paginate: true
 ---
+
 
 # **College Basketball Manager**
 ### John Azzara — CS461 Senior Seminar  
