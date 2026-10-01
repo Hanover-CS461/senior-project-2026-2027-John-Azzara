@@ -24,3 +24,7 @@ function generateBoxScore(boxScore) {
     return `${player}: ${stats.points} pts, ${stats.rebounds} reb, ${stats.assists} ast`;
   });
 }
+```
+Next: [Practice Exercises](exercises.md)
+
+Previous: [Coaching & Tactics](coaching-tactics.md)  

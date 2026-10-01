@@ -27,4 +27,5 @@ Hint: Use defensive pressure + randomness.
 ---
 
 Next: [Summary](summary.md)  
+
 Previous: [Box Score Generation](box-score-generation.md)

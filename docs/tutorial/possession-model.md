@@ -44,3 +44,7 @@ function updateGameState(state, madeShot, shotType, team) {
   }
   state.possession = team === "home" ? "away" : "home";
 }
+```
+Next: [Player Performance & Fatigue](player-preformance.md)
+
+Previous: [Game Overview](game_overview.md)  

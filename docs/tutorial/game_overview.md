@@ -38,3 +38,7 @@ const gameState = {
   fatigue: {},
   boxScore: {}
 };
+```
+Next: [Possession Model](possession-model.md)
+
+Previous: [Tutorial Index](tutorial_index.md)

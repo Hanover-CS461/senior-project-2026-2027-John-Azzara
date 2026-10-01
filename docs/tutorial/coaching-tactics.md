@@ -19,3 +19,7 @@ function applyTactics(baseProbability, tactics) {
   if (tactics.defense === "pressure") baseProbability -= 0.02;
   return baseProbability;
 }
+```
+Next: [Box Score Generation](box-score-generation.md)
+
+Previous: [Player Performance & Fatigue](player-preformance.md)  

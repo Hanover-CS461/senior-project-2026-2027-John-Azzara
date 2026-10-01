@@ -18,4 +18,10 @@ function applyFatigue(player, currentFatigue) {
 
 boxScore[player.id].fgAttempts++;
 if (madeShot) boxScore[player.id].fgMade++;
+```
+
+Next: [Coaching & Tactics](coaching-tactics.md)
+
+Previous: [Possession Model](possession-model.md)  
+
 

@@ -19,4 +19,4 @@ This foundation prepares you to build the full season simulator, recruiting logi
 
 ---
 
-[Back to Index](index.md)
+[Back to Index](tutorial_index.md)
