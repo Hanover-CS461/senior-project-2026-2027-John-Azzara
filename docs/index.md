@@ -7,9 +7,8 @@ title: Home
 
 This site documents my CS461 Senior Seminar project for 2026–2027.
 
-Use the navigation links above to explore:
-- [Project Proposal]({{ '/docs/proposal/proposal.md' | relative_url }})
-- [Bibliography]({{ '/docs/bibliography.md' | relative_url }})
-- [Game Simulation Logic Tutorial]({{ '/docs/tutorial/tutorial_index.md' | relative_url }})
+Use the navigation links below to explore:
 
-
+- [Project Proposal]({{ '/proposal/proposal.html' | relative_url }})
+- [Bibliography]({{ '/bibliography.html' | relative_url }})
+- [Game Simulation Logic Tutorial]({{ '/tutorial/tutorial_index.html' | relative_url }})
