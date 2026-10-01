@@ -1,6 +1,2 @@
-title: "John Azzara Senior Project"
-description: "CS461 Senior Seminar 2026–2027"
-theme: minima
+theme: null
 markdown: kramdown
-plugins:
-  - jekyll-feed
