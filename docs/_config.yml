@@ -1,2 +1,5 @@
 theme: null
 markdown: kramdown
+
+baseurl: "/senior-project-2026-2027-John-Azzara"
+url: "https://hanover-cs461.github.io"
