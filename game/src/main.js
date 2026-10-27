@@ -3,6 +3,12 @@ import './style.css'
 import { rosters } from './rosters.js'
 import { calculateOverall } from './ratings.js'
 import {
+  generateSECSchedule,
+  getTeamSchedule,
+  getRoundGames,
+  getNextGame
+} from './schedule.js'
+import {
   createGame,
   simulatePossession,
   simulateGame,
@@ -32,6 +38,7 @@ const defaults = {
 }
 
 let matchup = { home: '', away: '' }
+let career = null
 
 function escapeHTML(value) {
   return String(value ?? '').replace(/[&<>"']/g, character => ({
@@ -122,8 +129,34 @@ function on(id, callback) {
 }
 
 function getPlayers(team) {
-  return Array.isArray(rosters[team]) ? rosters[team] : []
+  const rosterKeys = {
+    'Mississippi State': 'MississippiState',
+    'Ole Miss': 'OleMiss',
+    'South Carolina': 'SouthCarolina',
+    'Texas A&M': 'TexasAM'
+  }
+
+  const key = rosterKeys[team] || team
+
+  return Array.isArray(rosters[key]) ? rosters[key] : []
 }
+
+
+function getTeamOverall(team) {
+  const players = getPlayers(team)
+
+  if (players.length < 5) return '--'
+
+  const topFive = players
+    .map(player => calculateOverall(player))
+    .sort((a, b) => b - a)
+    .slice(0, 5)
+
+  return Math.round(
+    topFive.reduce((sum, rating) => sum + rating, 0) / 5
+  )
+}
+
 
 function readyRoster(team) {
   return getPlayers(team).length >= 5
@@ -391,7 +424,15 @@ function showNewCareer() {
       return
     }
 
-    showCareerDashboard(coach, team)
+  career = {
+  coach,
+  team,
+  season: 2026,
+  schedule: generateSECSchedule(2026),
+  currentRound: 1
+}
+
+showCareerDashboard(coach, team)
   })
 
   on('career-back', showMainMenu)
@@ -452,14 +493,113 @@ function showCareerDashboard(coach, team) {
 
   on('dashboard-back', showMainMenu)
 
-  ;[
-    'career-roster',
-    'career-schedule',
-    'career-standings'
-  ].forEach(id => {
-    on(id, () => {
-      alert('This Career Mode feature will be added later.')
-    })
+    on('career-schedule', showCareerSchedule)
+
+  on('career-roster', () => {
+    alert('Career roster management will be connected next.')
+  })
+
+  on('career-standings', () => {
+    alert('SEC standings will be added next.')
+  })
+}
+
+
+function showCareerSchedule() {
+  if (!career) {
+    showNewCareer()
+    return
+  }
+
+  const { coach, team, schedule } = career
+  const teamGames = getTeamSchedule(schedule, team)
+
+  screen(`
+    ${title(
+      'CAREER MODE / SEC SCHEDULE',
+      '2026–27 SEC SCHEDULE',
+      `${team} · 18 Conference Games`
+    )}
+
+    ${teamBanner(team, '2026–27 CONFERENCE SCHEDULE')}
+
+    <div class="broadcast-stats">
+      <div class="broadcast-stat">
+        <span>CONFERENCE GAMES</span>
+        <strong>${teamGames.length}</strong>
+      </div>
+      <div class="broadcast-stat">
+        <span>HOME GAMES</span>
+        <strong>${teamGames.filter(game =>
+          game.home === team
+        ).length}</strong>
+      </div>
+      <div class="broadcast-stat">
+        <span>AWAY GAMES</span>
+        <strong>${teamGames.filter(game =>
+          game.away === team
+        ).length}</strong>
+      </div>
+      <div class="broadcast-stat">
+        <span>CURRENT ROUND</span>
+        <strong>${career.currentRound}</strong>
+      </div>
+    </div>
+
+    <div class="broadcast-panel">
+      <div class="panel-heading">
+        SEC REGULAR SEASON · 18 ROUNDS
+      </div>
+
+      <div class="table-scroll">
+        <table class="roster-table">
+          <thead>
+            <tr>
+              <th>ROUND</th>
+              <th>LOCATION</th>
+              <th>OPPONENT</th>
+              <th>OPP OVR</th>
+              <th>RESULT</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            ${teamGames.map(game => {
+              const isHome = game.home === team
+              const opponent = isHome
+                ? game.away
+                : game.home
+
+              const location = isHome
+                ? 'HOME'
+                : 'AWAY'
+
+              const result = game.played
+                ? `${game.homeScore}–${game.awayScore}`
+                : 'NOT PLAYED'
+
+              return `
+                <tr>
+                  <td>${game.round}</td>
+                  <td>${location}</td>
+                  <td>${escapeHTML(opponent)}</td>
+                  <td>${getTeamOverall(opponent)}</td>
+                  <td>${result}</td>
+                </tr>
+              `
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="center-navigation">
+      ${back('schedule-back', 'TEAM DASHBOARD')}
+    </div>
+  `)
+
+  on('schedule-back', () => {
+    showCareerDashboard(coach, team)
   })
 }
 
@@ -566,13 +706,18 @@ function showQuickGameSetup(
   const homeSelect = document.querySelector('#home-team')
   const awaySelect = document.querySelector('#away-team')
 
-  function update() {
-    document.querySelector('#home-preview').textContent =
-      homeSelect.value || 'SELECT TEAM'
+  
+function update() {
+  const home = homeSelect.value
+  const away = awaySelect.value
 
-    document.querySelector('#away-preview').textContent =
-      awaySelect.value || 'SELECT TEAM'
-  }
+  document.querySelector('#home-preview').textContent =
+    home ? `${home.toUpperCase()} | ${getTeamOverall(home)} OVR` : 'SELECT TEAM'
+
+  document.querySelector('#away-preview').textContent =
+    away ? `${away.toUpperCase()} | ${getTeamOverall(away)} OVR` : 'SELECT TEAM'
+}
+
 
   homeSelect.onchange = update
   awaySelect.onchange = update
@@ -820,7 +965,9 @@ function showRoster(team) {
 
     const tbody = document.querySelector('#roster-body')
 
-    players.forEach(player => {
+    ;[...players]
+  .sort((a, b) => calculateOverall(b) - calculateOverall(a))
+  .forEach(player => {
       const row = document.createElement('tr')
 
       const values = [
