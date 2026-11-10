@@ -438,71 +438,7 @@ showCareerDashboard(coach, team)
   on('career-back', showMainMenu)
 }
 
-function showCareerDashboard(coach, team) {
-  screen(`
-    ${title(
-      'CAREER MODE / OVERVIEW',
-      'TEAM DASHBOARD',
-      'Your program at a glance.'
-    )}
 
-    <div class="program-banner">
-      <div class="program-medallion">SEC</div>
-
-      <div class="program-info">
-        <div class="small-label">SOUTHEASTERN CONFERENCE</div>
-        <h2>${escapeHTML(team)}</h2>
-        <p>HEAD COACH: ${escapeHTML(coach)}</p>
-      </div>
-
-      <div class="season-medallion">
-        <span>SEASON</span>
-        <strong>2026–27</strong>
-      </div>
-    </div>
-
-    <div class="broadcast-stats">
-      <div class="broadcast-stat">
-        <span>OVERALL RECORD</span>
-        <strong>0–0</strong>
-      </div>
-      <div class="broadcast-stat">
-        <span>SEC RECORD</span>
-        <strong>0–0</strong>
-      </div>
-      <div class="broadcast-stat">
-        <span>SEASON</span>
-        <strong>2026–27</strong>
-      </div>
-      <div class="broadcast-stat">
-        <span>CONFERENCE</span>
-        <strong>SEC</strong>
-      </div>
-    </div>
-
-    <div class="dashboard-menu">
-      ${button('career-roster', 'VIEW ROSTER')}
-      ${button('career-schedule', 'VIEW SCHEDULE')}
-      ${button('career-standings', 'SEC STANDINGS')}
-    </div>
-
-    <div class="bottom-navigation">
-      ${back('dashboard-back', 'MAIN MENU')}
-    </div>
-  `)
-
-  on('dashboard-back', showMainMenu)
-
-    on('career-schedule', showCareerSchedule)
-
-  on('career-roster', () => {
-    alert('Career roster management will be connected next.')
-  })
-
-  on('career-standings', () => {
-    alert('SEC standings will be added next.')
-  })
-}
 
 
 function showCareerSchedule() {
@@ -602,6 +538,472 @@ function showCareerSchedule() {
     showCareerDashboard(coach, team)
   })
 }
+
+
+function showSECStandings() {
+  if (!career) {
+    showNewCareer()
+    return
+  }
+
+  const standings = teams.map(team => {
+    const teamGames = getTeamSchedule(career.schedule, team)
+    const playedGames = teamGames.filter(game => game.played)
+
+    let wins = 0
+    let losses = 0
+    let pointsFor = 0
+    let pointsAgainst = 0
+
+    playedGames.forEach(game => {
+      const isHome = game.home === team
+
+      const teamScore = isHome
+        ? game.homeScore
+        : game.awayScore
+
+      const opponentScore = isHome
+        ? game.awayScore
+        : game.homeScore
+
+      pointsFor += teamScore
+      pointsAgainst += opponentScore
+
+      if (teamScore > opponentScore) {
+        wins++
+      } else if (teamScore < opponentScore) {
+        losses++
+      }
+    })
+
+    const gamesPlayed = wins + losses
+
+    return {
+      team,
+      wins,
+      losses,
+      gamesPlayed,
+      percentage: gamesPlayed > 0
+        ? wins / gamesPlayed
+        : 0,
+      pointsFor,
+      pointsAgainst,
+      differential: pointsFor - pointsAgainst,
+      overall: getTeamOverall(team)
+    }
+  })
+
+  // Rank teams by winning percentage,
+  // then wins, point differential, and team name.
+  standings.sort((a, b) => {
+    if (b.percentage !== a.percentage) {
+      return b.percentage - a.percentage
+    }
+
+    if (b.wins !== a.wins) {
+      return b.wins - a.wins
+    }
+
+    if (b.differential !== a.differential) {
+      return b.differential - a.differential
+    }
+
+    return a.team.localeCompare(b.team)
+  })
+
+  screen(`
+    ${title(
+      'CAREER MODE / CONFERENCE',
+      'SEC STANDINGS',
+      '2026–27 Southeastern Conference'
+    )}
+
+    <div class="broadcast-stats">
+      <div class="broadcast-stat">
+        <span>CONFERENCE</span>
+        <strong>SEC</strong>
+      </div>
+
+      <div class="broadcast-stat">
+        <span>TEAMS</span>
+        <strong>16</strong>
+      </div>
+
+      <div class="broadcast-stat">
+        <span>SEASON</span>
+        <strong>2026–27</strong>
+      </div>
+
+      <div class="broadcast-stat">
+        <span>CURRENT ROUND</span>
+        <strong>${career.currentRound}</strong>
+      </div>
+    </div>
+
+    <div class="broadcast-panel">
+      <div class="panel-heading">
+        SEC REGULAR SEASON STANDINGS
+      </div>
+
+      <div class="table-scroll">
+        <table class="roster-table">
+          <thead>
+            <tr>
+              <th>RK</th>
+              <th>TEAM</th>
+              <th>W</th>
+              <th>L</th>
+              <th>PCT</th>
+              <th>PF</th>
+              <th>PA</th>
+              <th>DIFF</th>
+              <th>OVR</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            ${standings.map((entry, index) => {
+              const isUserTeam = entry.team === career.team
+
+              return `
+                <tr
+                  style="${isUserTeam
+                    ? 'background: rgba(255, 215, 0, 0.12);'
+                    : ''}"
+                >
+                  <td>${index + 1}</td>
+
+                  <td class="player-name">
+                    ${escapeHTML(entry.team)}
+                    ${isUserTeam ? ' ★' : ''}
+                  </td>
+
+                  <td>${entry.wins}</td>
+                  <td>${entry.losses}</td>
+                  <td>${entry.percentage.toFixed(3)}</td>
+                  <td>${entry.pointsFor}</td>
+                  <td>${entry.pointsAgainst}</td>
+                  <td>
+                    ${entry.differential > 0 ? '+' : ''}
+                    ${entry.differential}
+                  </td>
+                  <td class="overall-rating">
+                    ${entry.overall}
+                  </td>
+                </tr>
+              `
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="center-navigation">
+      ${back('standings-back', 'TEAM DASHBOARD')}
+    </div>
+  `)
+
+  on('standings-back', () => {
+    showCareerDashboard(career.coach, career.team)
+  })
+}
+
+function getCareerRecord(team) {
+  const games = getTeamSchedule(career.schedule, team)
+    .filter(game => game.played)
+
+  const wins = games.filter(game => {
+    const teamScore = game.home === team
+      ? game.homeScore
+      : game.awayScore
+
+    const opponentScore = game.home === team
+      ? game.awayScore
+      : game.homeScore
+
+    return teamScore > opponentScore
+  }).length
+
+  return `${wins}–${games.length - wins}`
+}
+
+function showCareerDashboard(coach, team) {
+  if (!career) {
+    showNewCareer()
+    return
+  }
+
+  const nextGame = getNextGame(career.schedule, team)
+  const record = getCareerRecord(team)
+
+  let nextGameHTML = ''
+
+  if (nextGame) {
+    const isHome = nextGame.home === team
+    const opponent = isHome ? nextGame.away : nextGame.home
+
+    nextGameHTML = `
+      <div class="broadcast-panel">
+        <div class="panel-heading">
+          NEXT GAME — SEC ROUND ${nextGame.round}
+        </div>
+
+        <div class="program-banner">
+          <div class="program-info">
+            <div class="small-label">YOUR TEAM</div>
+            <h2>${escapeHTML(team)}</h2>
+            <p>${isHome ? 'HOME' : 'AWAY'} GAME</p>
+          </div>
+
+          <div class="program-medallion">VS</div>
+
+          <div class="program-info">
+            <div class="small-label">OPPONENT</div>
+            <h2>${escapeHTML(opponent)}</h2>
+            <p>SEC CONFERENCE MATCHUP</p>
+          </div>
+        </div>
+
+        <div class="dashboard-menu">
+          ${button('career-game-day', 'GAME DAY')}
+        </div>
+      </div>
+    `
+  } else {
+    nextGameHTML = `
+      <div class="broadcast-panel">
+        <div class="panel-heading">SEASON COMPLETE</div>
+        <p>All scheduled SEC games have been completed.</p>
+      </div>
+    `
+  }
+
+  screen(`
+    ${title(
+      'CAREER MODE / OVERVIEW',
+      'TEAM DASHBOARD',
+      'Your program at a glance.'
+    )}
+
+    <div class="program-banner">
+      <div class="program-medallion">SEC</div>
+
+      <div class="program-info">
+        <div class="small-label">SOUTHEASTERN CONFERENCE</div>
+        <h2>${escapeHTML(team)}</h2>
+        <p>HEAD COACH: ${escapeHTML(coach)}</p>
+      </div>
+
+      <div class="season-medallion">
+        <span>SEASON</span>
+        <strong>2026–27</strong>
+      </div>
+    </div>
+
+    <div class="broadcast-stats">
+      <div class="broadcast-stat">
+        <span>OVERALL RECORD</span>
+        <strong>${record}</strong>
+      </div>
+
+      <div class="broadcast-stat">
+        <span>SEC RECORD</span>
+        <strong>${record}</strong>
+      </div>
+
+      <div class="broadcast-stat">
+        <span>SEASON</span>
+        <strong>2026–27</strong>
+      </div>
+
+      <div class="broadcast-stat">
+        <span>CURRENT ROUND</span>
+        <strong>${career.currentRound}</strong>
+      </div>
+    </div>
+
+    ${nextGameHTML}
+
+    <div class="dashboard-menu">
+      ${button('career-roster', 'VIEW ROSTER')}
+      ${button('career-schedule', 'VIEW SCHEDULE')}
+      ${button('career-standings', 'SEC STANDINGS')}
+    </div>
+
+    <div class="bottom-navigation">
+      ${back('dashboard-back', 'MAIN MENU')}
+    </div>
+  `)
+
+  on('dashboard-back', showMainMenu)
+
+  on('career-schedule', showCareerSchedule)
+
+  on('career-standings', showSECStandings)
+
+  on('career-roster', () => {
+    alert('Career roster management will be connected next.')
+  })
+
+  if (nextGame) {
+    on('career-game-day', showCareerGameDay)
+  }
+}
+
+function simulateCareerMatchup(home, away) {
+  if (!readyRoster(home) || !readyRoster(away)) {
+    throw new Error(`Missing roster for ${home} or ${away}`)
+  }
+
+  const game = createGame(
+    {
+      team: home,
+      players: getPlayers(home),
+      lineup: { ...ensureLineup(home) },
+      rotation: [...ensureRotation(home)],
+      tactics: { ...ensureTactics(home) }
+    },
+    {
+      team: away,
+      players: getPlayers(away),
+      lineup: { ...ensureLineup(away) },
+      rotation: [...ensureRotation(away)],
+      tactics: { ...ensureTactics(away) }
+    }
+  )
+
+  return simulateGame(game)
+}
+
+function showCareerGameDay() {
+  if (!career) {
+    showNewCareer()
+    return
+  }
+
+  const game = getNextGame(career.schedule, career.team)
+
+  if (!game) {
+    showCareerDashboard(career.coach, career.team)
+    return
+  }
+
+  const isHome = game.home === career.team
+  const opponent = isHome ? game.away : game.home
+
+  const homeOverall = getTeamOverall(game.home)
+  const awayOverall = getTeamOverall(game.away)
+
+  screen(`
+    ${title(
+      'CAREER MODE / GAME DAY',
+      'SEC MATCHUP',
+      `Round ${game.round} of 18`
+    )}
+
+    <div class="broadcast-panel">
+      <div class="panel-heading">
+        SEC REGULAR SEASON — ROUND ${game.round}
+      </div>
+
+      <div class="program-banner">
+        <div class="program-info">
+          <div class="small-label">AWAY TEAM</div>
+          <h2>${escapeHTML(game.away)}</h2>
+          <p>TEAM OVR: ${awayOverall}</p>
+        </div>
+
+        <div class="program-medallion">VS</div>
+
+        <div class="program-info">
+          <div class="small-label">HOME TEAM</div>
+          <h2>${escapeHTML(game.home)}</h2>
+          <p>TEAM OVR: ${homeOverall}</p>
+        </div>
+      </div>
+
+      <div class="broadcast-stats">
+        <div class="broadcast-stat">
+          <span>YOUR TEAM</span>
+          <strong>${escapeHTML(career.team)}</strong>
+        </div>
+
+        <div class="broadcast-stat">
+          <span>OPPONENT</span>
+          <strong>${escapeHTML(opponent)}</strong>
+        </div>
+
+        <div class="broadcast-stat">
+          <span>LOCATION</span>
+          <strong>${isHome ? 'HOME' : 'AWAY'}</strong>
+        </div>
+
+        <div class="broadcast-stat">
+          <span>ROUND</span>
+          <strong>${game.round} / 18</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-menu">
+      ${button('career-play-game', 'PLAY GAME')}
+      ${button('career-sim-game', 'SIMULATE GAME')}
+    </div>
+
+    <div class="bottom-navigation">
+      ${back('career-game-back', 'TEAM DASHBOARD')}
+    </div>
+  `)
+
+  
+on('career-play-game', () => {
+  if (!readyRoster(game.home) || !readyRoster(game.away)) {
+    alert('Both teams need at least five players to play.')
+    return
+  }
+
+  showSimulationReady('career')
+})
+
+
+  on('career-sim-game', () => {
+    const roundGames = getRoundGames(
+      career.schedule,
+      game.round
+    )
+
+    if (roundGames.some(scheduledGame =>
+      !readyRoster(scheduledGame.home) ||
+      !readyRoster(scheduledGame.away)
+    )) {
+      alert('One or more teams do not have enough players.')
+      return
+    }
+
+    for (const scheduledGame of roundGames) {
+      if (scheduledGame.played) continue
+
+      const result = simulateCareerMatchup(
+        scheduledGame.home,
+        scheduledGame.away
+      )
+
+      scheduledGame.homeScore = result.home.score
+      scheduledGame.awayScore = result.away.score
+      scheduledGame.played = true
+      scheduledGame.result = result
+    }
+
+    career.currentRound = game.round + 1
+
+    showCareerDashboard(career.coach, career.team)
+  })
+
+  on('career-game-back', () => {
+    showCareerDashboard(career.coach, career.team)
+  })
+}
+
 
 // QUICK GAME
 
@@ -1537,8 +1939,22 @@ function showUnavailable(team) {
 
 // LIVE GAME SIMULATION
 
-function showSimulationReady() {
-  const { home, away } = matchup
+
+function showSimulationReady(mode = 'quick') {
+  const careerMode = mode === 'career'
+
+  const scheduledGame = careerMode
+    ? getNextGame(career.schedule, career.team)
+    : null
+
+  const home = careerMode
+    ? scheduledGame.home
+    : matchup.home
+
+  const away = careerMode
+    ? scheduledGame.away
+    : matchup.away
+
 
   const game = createGame(
     {
@@ -1991,10 +2407,23 @@ function showSimulationReady() {
     render()
   })
 
+  
   on('game-finish', () => {
     stopTimer()
-    showFinalBoxScore(getGameResult(game))
-  })
+
+    const result = getGameResult(game)
+
+    if (careerMode && scheduledGame) {
+      scheduledGame.homeScore = result.home.score
+      scheduledGame.awayScore = result.away.score
+      scheduledGame.played = true
+      scheduledGame.result = result
+  }
+  
+showFinalBoxScore(result, careerMode ? 'career' : 'quick')
+
+})
+
 
   on('leave-live-game', () => {
     stopTimer()
@@ -2006,7 +2435,8 @@ function showSimulationReady() {
 
 // FINAL BOX SCORE
 
-function showFinalBoxScore(result) {
+
+function showFinalBoxScore(result, mode = 'quick') {
   function makePlayerTable(team) {
     return `
       <div class="broadcast-panel boxscore-panel">
@@ -2101,7 +2531,15 @@ function showFinalBoxScore(result) {
     </div>
   `)
 
-  on('boxscore-back', showMatchupOverview)
+
+on('boxscore-back', () => {
+  if (mode === 'career') {
+    showCareerDashboard(career.coach, career.team)
+  } else {
+    showMatchupOverview()
+  }
+})
+
 }
 
 showMainMenu()
