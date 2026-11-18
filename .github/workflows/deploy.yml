@@ -1,9 +1,14 @@
+
 name: Pages deploy
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -18,17 +23,37 @@ jobs:
         with:
           ruby-version: '3.1'
 
-      - name: Install dependencies
+      - name: Install Jekyll dependencies
         working-directory: docs
         run: |
           gem install bundler
           bundle install
 
-      - name: Build site
+      - name: Build documentation website
         working-directory: docs
         run: bundle exec jekyll build --destination ../_site
 
-      - name: Upload artifact
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: game/package-lock.json
+
+      - name: Install game dependencies
+        working-directory: game
+        run: npm ci
+
+      - name: Build basketball game
+        working-directory: game
+        run: npm run build
+
+      - name: Add game to website
+        run: |
+          mkdir -p _site/game
+          cp -r game/dist/. _site/game/
+
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
@@ -36,10 +61,16 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+
     permissions:
       pages: write
       id-token: write
 
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
